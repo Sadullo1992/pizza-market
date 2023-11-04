@@ -1,5 +1,13 @@
+import Header from './components/Header';
+import Home from './pages/Home';
+
 function App() {
-  return <h1>Pizza market</h1>;
+  return (
+    <div className="wrapper">
+      <Header />
+      <Home />
+    </div>
+  );
 }
 
 export default App;

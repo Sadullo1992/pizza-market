@@ -1,3 +1,17 @@
-h1 {
-    color: red;
-}
+// Abstracts
+@import './abstracts/variables';
+@import './abstracts/mixins';
+
+// Base
+@import './base/base';
+@import './base/fonts';
+
+// Components
+@import './components/header';
+@import './components/button';
+@import './components/categories';
+@import './components/sort';
+@import './components/pizza-block';
+
+// Libs
+@import './libs/normalize';
