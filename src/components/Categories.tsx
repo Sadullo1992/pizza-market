@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { clsx } from 'clsx';
-import { PIZZA_CATEGORIES } from '../constants/constants';
 
 type CategoriesProps = {
-  getCategoryName: (name: string) => void;
+  selectCategory: (name: string) => void;
+  items: string[];
 };
 
-export default function Categories({ getCategoryName }: CategoriesProps) {
+export default function Categories({ selectCategory, items }: CategoriesProps) {
   const [activeItem, setActiveItem] = useState('Все');
   const handleOnClick = (name: string) => {
-    getCategoryName(name);
+    selectCategory(name);
     setActiveItem(name);
   };
   return (
     <div className="categories">
       <ul>
-        {PIZZA_CATEGORIES.map((name, index) => (
+        {items.map((name, index) => (
           <li
             className={clsx(activeItem === name && 'active')}
             key={`${name}__${index}`}

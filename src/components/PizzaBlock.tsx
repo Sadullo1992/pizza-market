@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IPizza } from '../types/types';
 import PlusIcon from '../utils/PlusIcon';
 import Button from './Button';
@@ -16,10 +16,6 @@ export default function PizzaBlock({ item }: PizzaBlockProps) {
 
   const [activeType, setActiveType] = useState(initialActiveType);
   const [activeSize, setActiveSize] = useState(sizes[0]);
-
-  useEffect(() => {
-    console.log(activeType);
-  }, [activeType]);
 
   return (
     <div className="pizza-block">
