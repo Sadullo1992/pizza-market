@@ -1,12 +1,14 @@
+import Button from './Button';
+
 export default function HeaderCart() {
   return (
     <div className="header__cart">
-      <a href="/cart" className="button button--cart">
+      <Button href="/cart" className="button--cart">
         <span>520 ₽</span>
         <div className="button__delimiter"></div>
         {cartLogo()}
         <span>3</span>
-      </a>
+      </Button>
     </div>
   );
 }

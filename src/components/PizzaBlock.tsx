@@ -1,4 +1,5 @@
 import PlusIcon from '../utils/PlusIcon';
+import Button from './Button';
 
 export default function PizzaBlock() {
   return (
@@ -22,11 +23,11 @@ export default function PizzaBlock() {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от 395 ₽</div>
-        <div className="button button--outline button--add">
+        <Button className="button--outline button--add">
           <PlusIcon />
           <span>Добавить</span>
           <i>2</i>
-        </div>
+        </Button>
       </div>
     </div>
   );
