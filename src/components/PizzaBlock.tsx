@@ -1,28 +1,59 @@
+import { clsx } from 'clsx';
+import { useEffect, useState } from 'react';
+import { IPizza } from '../types/types';
 import PlusIcon from '../utils/PlusIcon';
 import Button from './Button';
 
-export default function PizzaBlock() {
+type PizzaBlockProps = {
+  item: IPizza;
+};
+
+export default function PizzaBlock({ item }: PizzaBlockProps) {
+  const { imageUrl, name, price, sizes, types } = item;
+  const pizzaSizes = [26, 30, 40];
+  const typeNames = ['тонкое', 'традиционное'];
+  const initialActiveType = typeNames[types[0]];
+
+  const [activeType, setActiveType] = useState(initialActiveType);
+  const [activeSize, setActiveSize] = useState(sizes[0]);
+
+  useEffect(() => {
+    console.log(activeType);
+  }, [activeType]);
+
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
-      />
-      <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+      <img className="pizza-block__image" src={imageUrl} alt={name} />
+      <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {typeNames.map((type, index) => (
+            <li
+              className={clsx(
+                !types.includes(index) && 'disabled',
+                activeType === type && 'active'
+              )}
+              key={type}
+              onClick={() => setActiveType(type)}
+            >
+              {type}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {pizzaSizes.map((size) => (
+            <li
+              className={clsx(!sizes.includes(size) && 'disabled', activeSize === size && 'active')}
+              key={size}
+              onClick={() => setActiveSize(size)}
+            >
+              {size} см.
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от 395 ₽</div>
+        <div className="pizza-block__price">от {price} ₽</div>
         <Button className="button--outline button--add">
           <PlusIcon />
           <span>Добавить</span>

@@ -1,13 +1,29 @@
-export default function Categories() {
+import { useState } from 'react';
+import { clsx } from 'clsx';
+import { PIZZA_CATEGORIES } from '../constants/constants';
+
+type CategoriesProps = {
+  getCategoryName: (name: string) => void;
+};
+
+export default function Categories({ getCategoryName }: CategoriesProps) {
+  const [activeItem, setActiveItem] = useState('Все');
+  const handleOnClick = (name: string) => {
+    getCategoryName(name);
+    setActiveItem(name);
+  };
   return (
     <div className="categories">
       <ul>
-        <li className="active">Все</li>
-        <li>Мясные</li>
-        <li>Вегетарианская</li>
-        <li>Гриль</li>
-        <li>Острые</li>
-        <li>Закрытые</li>
+        {PIZZA_CATEGORIES.map((name, index) => (
+          <li
+            className={clsx(activeItem === name && 'active')}
+            key={`${name}__${index}`}
+            onClick={() => handleOnClick(name)}
+          >
+            {name}
+          </li>
+        ))}
       </ul>
     </div>
   );
