@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import CartItem from '../components/CartItem';
 import { CartIcon, TrashIcon } from '../utils';
@@ -31,10 +32,12 @@ export default function Cart() {
               </span>
             </div>
             <div className="cart__bottom-buttons">
-              <Button href="/" className="button--outline button--add go-back-btn">
-                {backIcon()}
-                <span>Вернуться назад</span>
-              </Button>
+              <Link to={'/'}>
+                <Button className="button--outline button--add go-back-btn">
+                  {backIcon()}
+                  <span>Вернуться назад</span>
+                </Button>
+              </Link>
               <Button className="pay-btn">
                 <span>Оплатить сейчас</span>
               </Button>
