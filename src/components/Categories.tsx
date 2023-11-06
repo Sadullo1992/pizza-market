@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { clsx } from 'clsx';
+
+import { PIZZA_CATEGORIES } from '../constants/constants';
 
 type CategoriesProps = {
   selectCategory: (name: string) => void;
-  items: string[];
 };
 
-export default function Categories({ selectCategory, items }: CategoriesProps) {
+const Categories = memo(function ({ selectCategory }: CategoriesProps) {
   const [activeItem, setActiveItem] = useState('Все');
   const handleOnClick = (name: string) => {
     selectCategory(name);
@@ -15,7 +16,7 @@ export default function Categories({ selectCategory, items }: CategoriesProps) {
   return (
     <div className="categories">
       <ul>
-        {items.map((name, index) => (
+        {PIZZA_CATEGORIES.map((name, index) => (
           <li
             className={clsx(activeItem === name && 'active')}
             key={`${name}__${index}`}
@@ -27,4 +28,6 @@ export default function Categories({ selectCategory, items }: CategoriesProps) {
       </ul>
     </div>
   );
-}
+});
+
+export default Categories;

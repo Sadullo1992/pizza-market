@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock';
@@ -9,16 +9,14 @@ import { IPizza, TSortType } from '../types/types';
 
 export default function Home() {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
-  const [categoryIndex, setCategoryIndex] = useState(0);
-  const [sort, setSort] = useState<TSortType>('rating');
+  const [category, setCategory] = useState(0);
+  const [sortBy, setSortBy] = useState<TSortType>('rating');
 
   useEffect(() => {
     const fetchPizzas = async () => {
       try {
         const res = await axios.get(
-          `${BASE_URL}/pizzas?_sort=${sort}${
-            categoryIndex !== 0 ? `&category=${categoryIndex}` : ''
-          }`
+          `${BASE_URL}/pizzas?_sort=${sortBy}${category !== 0 ? `&category=${category}` : ''}`
         );
         setPizzas(res.data);
       } catch (e) {
@@ -26,25 +24,25 @@ export default function Home() {
       }
     };
     fetchPizzas();
-  }, [categoryIndex, sort]);
+  }, [category, sortBy]);
 
-  const onSelectCategory = (name: string) => {
+  const onSelectCategory = useCallback((name: string) => {
     const index = PIZZA_CATEGORIES.findIndex((item) => item === name);
-    setCategoryIndex(index);
-  };
+    setCategory(index);
+  }, []);
 
-  const onSelectSort = (type: TSortType) => {
-    setSort(type);
-  };
+  const onSelectSort = useCallback((type: TSortType) => {
+    setSortBy(type);
+  }, []);
 
   return (
     <div className="content">
       <div className="container">
         <div className="content__top">
-          <Categories selectCategory={onSelectCategory} items={PIZZA_CATEGORIES} />
+          <Categories selectCategory={onSelectCategory} />
           <Sort selectSort={onSelectSort} />
         </div>
-        <h2 className="content__title">{PIZZA_CATEGORIES[categoryIndex]} пиццы</h2>
+        <h2 className="content__title">{PIZZA_CATEGORIES[category]} пиццы</h2>
         <div className="content__items">
           {pizzas.map((item) => (
             <PizzaBlock key={item.id} item={item} />

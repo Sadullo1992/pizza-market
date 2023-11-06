@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { clsx } from 'clsx';
 
 import { SORT_TYPES } from '../constants/constants';
@@ -8,7 +8,7 @@ type SortProps = {
   selectSort: (type: TSortType) => void;
 };
 
-export default function Sort({ selectSort }: SortProps) {
+const Sort = memo(function ({ selectSort }: SortProps) {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const [isPopup, setIsPopup] = useState<boolean>(false);
@@ -56,7 +56,9 @@ export default function Sort({ selectSort }: SortProps) {
       )}
     </div>
   );
-}
+});
+
+export default Sort;
 
 function dropdownArrow(className: string) {
   return (
