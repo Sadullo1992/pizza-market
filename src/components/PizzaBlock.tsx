@@ -51,7 +51,7 @@ export default function PizzaBlock({ item }: PizzaBlockProps) {
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
         <Button className="button--outline button--add">
-          <PlusIcon />
+          <PlusIcon size={12} />
           <span>Добавить</span>
           <i>2</i>
         </Button>

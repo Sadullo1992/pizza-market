@@ -178,13 +178,12 @@ body {
 
       .button {
         border-color: darken($color: $gray-line, $amount: 10);
-      }
+        svg {
+          transform: rotate(45deg);
 
-      svg {
-        transform: rotate(45deg);
-
-        path {
-          fill: darken($color: $gray-line, $amount: 15);
+          path {
+            fill: darken($color: $gray-line, $amount: 15);
+          }
         }
       }
 
