@@ -8,3 +8,7 @@ export interface IPizza {
   category: number;
   rating: number;
 }
+
+export const SortTypes = ['rating', 'price', 'name'] as const;
+
+export type TSortType = (typeof SortTypes)[number];
