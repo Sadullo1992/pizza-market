@@ -25,6 +25,10 @@ export type TCartContext = {
   totalCount: number;
   totalPrice: number;
   addPizzaToCart: (obj: ICartPizza) => void;
+  onPlusCartItem: (id: number) => void;
+  onMinusCartItem: (id: number) => void;
+  onRemoveCartItem: (id: number) => void;
+  onClearCart: () => void;
 };
 
 export const SortTypes = ['rating', 'price', 'name'] as const;

@@ -10,6 +10,10 @@ export const CartContext = createContext<TCartContext>({
   totalCount: 0,
   totalPrice: 0,
   addPizzaToCart: () => {},
+  onPlusCartItem: () => {},
+  onMinusCartItem: () => {},
+  onRemoveCartItem: () => {},
+  onClearCart: () => {},
 });
 
 const CartProvider = ({ children }: CartProviderProps) => {
@@ -29,6 +33,15 @@ const CartProvider = ({ children }: CartProviderProps) => {
     return Object.values(obj).reduce((sum, obj) => getTotalSum(obj.items) + sum, 0);
   };
 
+  const updateState = (newCartItems: TCartItems) => {
+    const newCounts = getTotalCount(newCartItems);
+    const newPrices = getTotalPrice(newCartItems);
+
+    setCartItems(newCartItems);
+    setTotalCount(newCounts);
+    setTotalPrice(newPrices);
+  };
+
   const addPizzaToCart = (obj: ICartPizza) => {
     const currentPizzaItems = !cartItems[obj.id] ? [obj] : [...cartItems[obj.id].items, obj];
 
@@ -37,12 +50,40 @@ const CartProvider = ({ children }: CartProviderProps) => {
       [obj.id]: { items: currentPizzaItems },
     };
 
-    const newCounts = getTotalCount(newItems);
-    const newPrices = getTotalPrice(newItems);
+    updateState(newItems);
+  };
 
-    setCartItems(newItems);
-    setTotalCount(newCounts);
-    setTotalPrice(newPrices);
+  const onPlusCartItem = (id: number) => {
+    const newItems = {
+      ...cartItems,
+      [id]: { items: [...cartItems[id].items, cartItems[id].items[0]] },
+    };
+
+    updateState(newItems);
+  };
+
+  const onMinusCartItem = (id: number) => {
+    const oldPizzaItems = cartItems[id].items;
+
+    const currentPizzaItems = oldPizzaItems.length > 1 ? oldPizzaItems.slice(1) : oldPizzaItems;
+
+    const newItems = {
+      ...cartItems,
+      [id]: { items: currentPizzaItems },
+    };
+
+    updateState(newItems);
+  };
+
+  const onRemoveCartItem = (id: number) => {
+    delete cartItems[id];
+    updateState(cartItems);
+  };
+
+  const onClearCart = () => {
+    setCartItems({});
+    setTotalCount(0);
+    setTotalPrice(0);
   };
 
   return (
@@ -52,6 +93,10 @@ const CartProvider = ({ children }: CartProviderProps) => {
         addPizzaToCart,
         totalCount,
         totalPrice,
+        onPlusCartItem,
+        onMinusCartItem,
+        onRemoveCartItem,
+        onClearCart,
       }}
     >
       {children}

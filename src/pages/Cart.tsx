@@ -1,9 +1,16 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import CartItem from '../components/CartItem';
+import { CartContext } from '../context/CartContext';
+import { TCartContext } from '../types/types';
 import { CartIcon, TrashIcon } from '../utils';
 
 export default function Cart() {
+  const { cartItems, totalCount, totalPrice, onClearCart } = useContext<TCartContext>(CartContext);
+
+  const cartPizzas = Object.keys(cartItems).map((key) => cartItems[key].items[0]);
+
   return (
     <div className="content">
       <div className="container container--cart">
@@ -13,22 +20,23 @@ export default function Cart() {
               <CartIcon />
               Корзина
             </h2>
-            <div className="cart__clear">
+            <div className="cart__clear" onClick={() => onClearCart()}>
               <TrashIcon />
               <span>Очистить корзину</span>
             </div>
           </div>
           <div className="content__items">
-            <CartItem />
-            <CartItem />
+            {cartPizzas.map((obj) => (
+              <CartItem key={obj.id} item={obj} />
+            ))}
           </div>
           <div className="cart__bottom">
             <div className="cart__bottom-details">
               <span>
-                Всего пицц: <b>3 шт.</b>
+                Всего пицц: <b>{totalCount} шт.</b>
               </span>
               <span>
-                Сумма заказа: <b>900 ₽</b>
+                Сумма заказа: <b>{totalPrice} ₽</b>
               </span>
             </div>
             <div className="cart__bottom-buttons">
