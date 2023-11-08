@@ -9,6 +9,24 @@ export interface IPizza {
   rating: number;
 }
 
+export interface ICartPizza {
+  id: number;
+  imageUrl: string;
+  name: string;
+  type: string;
+  size: number;
+  price: number;
+}
+
+export type TCartItems = { [key in string]: { items: ICartPizza[] } };
+
+export type TCartContext = {
+  cartItems: TCartItems;
+  totalCount: number;
+  totalPrice: number;
+  addPizzaToCart: (obj: ICartPizza) => void;
+};
+
 export const SortTypes = ['rating', 'price', 'name'] as const;
 
 export type TSortType = (typeof SortTypes)[number];

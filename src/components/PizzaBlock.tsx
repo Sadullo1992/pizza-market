@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { useState } from 'react';
-import { IPizza } from '../types/types';
+import { useContext, useState } from 'react';
+import { CartContext } from '../context/CartContext';
+import { IPizza, TCartContext } from '../types/types';
 import PlusIcon from '../utils/PlusIcon';
 import Button from './Button';
 
@@ -9,13 +10,29 @@ type PizzaBlockProps = {
 };
 
 export default function PizzaBlock({ item }: PizzaBlockProps) {
-  const { imageUrl, name, price, sizes, types } = item;
+  const { id, imageUrl, name, price, sizes, types } = item;
   const pizzaSizes = [26, 30, 40];
   const typeNames = ['тонкое', 'традиционное'];
   const initialActiveType = typeNames[types[0]];
 
   const [activeType, setActiveType] = useState(initialActiveType);
   const [activeSize, setActiveSize] = useState(sizes[0]);
+
+  const { cartItems, addPizzaToCart } = useContext<TCartContext>(CartContext);
+
+  const addedCount = cartItems[item.id] && cartItems[item.id].items.length;
+
+  const onAddClickPizza = () => {
+    const obj = {
+      id,
+      imageUrl,
+      name,
+      type: activeType,
+      size: activeSize,
+      price,
+    };
+    addPizzaToCart(obj);
+  };
 
   return (
     <div className="pizza-block">
@@ -50,10 +67,10 @@ export default function PizzaBlock({ item }: PizzaBlockProps) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <Button className="button--outline button--add">
+        <Button className="button--outline button--add" onClick={() => onAddClickPizza()}>
           <PlusIcon size={12} />
           <span>Добавить</span>
-          <i>2</i>
+          {addedCount && <i>{addedCount}</i>}
         </Button>
       </div>
     </div>
