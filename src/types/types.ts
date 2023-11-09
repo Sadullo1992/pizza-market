@@ -20,16 +20,19 @@ export interface ICartPizza {
 
 export type TCartItems = { [key in string]: { items: ICartPizza[] } };
 
-export type TCartContext = {
+export interface ICartState {
   cartItems: TCartItems;
   totalCount: number;
   totalPrice: number;
+}
+
+export interface TCartContext extends ICartState {
   addPizzaToCart: (obj: ICartPizza) => void;
   onPlusCartItem: (id: number) => void;
   onMinusCartItem: (id: number) => void;
   onRemoveCartItem: (id: number) => void;
   onClearCart: () => void;
-};
+}
 
 export const SortTypes = ['rating', 'price', 'name'] as const;
 
