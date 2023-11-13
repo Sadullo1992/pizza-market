@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
 import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock';
 import Sort from '../components/Sort';
-import { BASE_URL, PIZZA_CATEGORIES } from '../constants/constants';
+import { PIZZA_CATEGORIES } from '../constants/constants';
+
+import { db } from '../db/firebaseDB';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 
 import { IPizza, TSortType } from '../types/types';
 
@@ -12,18 +14,25 @@ export default function Home() {
   const [category, setCategory] = useState(0);
   const [sortBy, setSortBy] = useState<TSortType>('rating');
 
+  const pizzasCollectionRef = collection(db, 'pizzas');
+
   useEffect(() => {
-    const fetchPizzas = async () => {
+    const getPizzaList = async () => {
+      const q = !category
+        ? query(pizzasCollectionRef, orderBy(sortBy))
+        : query(pizzasCollectionRef, where('category', '==', category), orderBy(sortBy));
       try {
-        const res = await axios.get(
-          `${BASE_URL}/pizzas?_sort=${sortBy}${category !== 0 ? `&category=${category}` : ''}`
-        );
-        setPizzas(res.data);
-      } catch (e) {
-        console.log(e);
+        const data = await getDocs(q);
+
+        const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }) as IPizza);
+        setPizzas(filteredData);
+      } catch (error) {
+        console.error(error);
       }
     };
-    fetchPizzas();
+
+    getPizzaList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, sortBy]);
 
   const onSelectCategory = useCallback((name: string) => {

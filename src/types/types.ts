@@ -1,5 +1,5 @@
 export interface IPizza {
-  id: number;
+  id: string;
   imageUrl: string;
   name: string;
   types: number[];
@@ -10,7 +10,7 @@ export interface IPizza {
 }
 
 export interface ICartPizza {
-  id: number;
+  id: string;
   imageUrl: string;
   name: string;
   type: string;
