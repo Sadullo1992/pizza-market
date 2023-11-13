@@ -22,17 +22,17 @@ export const addPizza = (pizzaObj: ICartPizza) => ({
   payload: pizzaObj,
 });
 
-export const plusPizza = (id: number) => ({
+export const plusPizza = (id: string) => ({
   type: ActionTypes.PLUS_PIZZA,
   payload: id,
 });
 
-export const minusPizza = (id: number) => ({
+export const minusPizza = (id: string) => ({
   type: ActionTypes.MINUS_PIZZA,
   payload: id,
 });
 
-export const removePizza = (id: number) => ({
+export const removePizza = (id: string) => ({
   type: ActionTypes.REMOVE_PIZZA,
   payload: id,
 });

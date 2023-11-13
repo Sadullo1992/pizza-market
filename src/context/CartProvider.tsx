@@ -19,11 +19,11 @@ const CartProvider = ({ children }: CartProviderProps) => {
 
   const addPizzaToCart = (obj: ICartPizza) => dispatch(addPizza(obj));
 
-  const onPlusCartItem = (id: number) => dispatch(plusPizza(id));
+  const onPlusCartItem = (id: string) => dispatch(plusPizza(id));
 
-  const onMinusCartItem = (id: number) => dispatch(minusPizza(id));
+  const onMinusCartItem = (id: string) => dispatch(minusPizza(id));
 
-  const onRemoveCartItem = (id: number) => dispatch(removePizza(id));
+  const onRemoveCartItem = (id: string) => dispatch(removePizza(id));
 
   const onClearCart = () => dispatch(clearCart());
 

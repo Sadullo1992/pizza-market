@@ -28,9 +28,9 @@ export interface ICartState {
 
 export interface TCartContext extends ICartState {
   addPizzaToCart: (obj: ICartPizza) => void;
-  onPlusCartItem: (id: number) => void;
-  onMinusCartItem: (id: number) => void;
-  onRemoveCartItem: (id: number) => void;
+  onPlusCartItem: (id: string) => void;
+  onMinusCartItem: (id: string) => void;
+  onRemoveCartItem: (id: string) => void;
   onClearCart: () => void;
 }
 

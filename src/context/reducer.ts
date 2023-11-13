@@ -38,7 +38,7 @@ export const cartReducer = (state: ICartState, actions: IAction): ICartState => 
     }
 
     case ActionTypes.PLUS_PIZZA: {
-      const action = actions as IPayloadAction<number>;
+      const action = actions as IPayloadAction<string>;
       const newItems = {
         ...state.cartItems,
         [action.payload]: {
@@ -61,7 +61,7 @@ export const cartReducer = (state: ICartState, actions: IAction): ICartState => 
     }
 
     case ActionTypes.MINUS_PIZZA: {
-      const action = actions as IPayloadAction<number>;
+      const action = actions as IPayloadAction<string>;
       const oldPizzaItems = state.cartItems[action.payload].items;
 
       const currentPizzaItems = oldPizzaItems.length > 1 ? oldPizzaItems.slice(1) : oldPizzaItems;
@@ -83,7 +83,7 @@ export const cartReducer = (state: ICartState, actions: IAction): ICartState => 
     }
 
     case ActionTypes.REMOVE_PIZZA: {
-      const action = actions as IPayloadAction<number>;
+      const action = actions as IPayloadAction<string>;
       const newItems = {
         ...state.cartItems,
       };
