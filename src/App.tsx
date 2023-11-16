@@ -4,7 +4,8 @@ import Cart from './pages/Cart';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { CartProvider } from './context/CartProvider';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </CartProvider>
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </div>
   );
