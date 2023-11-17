@@ -14,6 +14,18 @@ const getTotalPrice = (obj: TCartItems) => {
 };
 
 export const cartReducer = (state: ICartState, actions: IAction): ICartState => {
+  const updateState = (newItems: TCartItems) => {
+    const totalCount = getTotalCount(newItems);
+    const totalPrice = getTotalPrice(newItems);
+
+    return {
+      ...state,
+      cartItems: newItems,
+      totalCount,
+      totalPrice,
+    };
+  };
+
   switch (actions.type) {
     case ActionTypes.ADD_PIZZA: {
       const action = actions as IPayloadAction<ICartPizza>;
@@ -26,15 +38,7 @@ export const cartReducer = (state: ICartState, actions: IAction): ICartState => 
         [action.payload.id]: { items: currentPizzaItems },
       };
 
-      const totalCount = getTotalCount(newItems);
-      const totalPrice = getTotalPrice(newItems);
-
-      return {
-        ...state,
-        cartItems: newItems,
-        totalCount,
-        totalPrice,
-      };
+      return updateState(newItems);
     }
 
     case ActionTypes.PLUS_PIZZA: {
@@ -49,15 +53,7 @@ export const cartReducer = (state: ICartState, actions: IAction): ICartState => 
         },
       };
 
-      const totalCount = getTotalCount(newItems);
-      const totalPrice = getTotalPrice(newItems);
-
-      return {
-        ...state,
-        cartItems: newItems,
-        totalCount,
-        totalPrice,
-      };
+      return updateState(newItems);
     }
 
     case ActionTypes.MINUS_PIZZA: {
@@ -71,15 +67,7 @@ export const cartReducer = (state: ICartState, actions: IAction): ICartState => 
         [action.payload]: { items: currentPizzaItems },
       };
 
-      const totalCount = getTotalCount(newItems);
-      const totalPrice = getTotalPrice(newItems);
-
-      return {
-        ...state,
-        cartItems: newItems,
-        totalCount,
-        totalPrice,
-      };
+      return updateState(newItems);
     }
 
     case ActionTypes.REMOVE_PIZZA: {
@@ -90,15 +78,7 @@ export const cartReducer = (state: ICartState, actions: IAction): ICartState => 
 
       delete newItems[action.payload];
 
-      const totalCount = getTotalCount(newItems);
-      const totalPrice = getTotalPrice(newItems);
-
-      return {
-        ...state,
-        cartItems: newItems,
-        totalCount,
-        totalPrice,
-      };
+      return updateState(newItems);
     }
 
     case ActionTypes.CLEAR_CART: {
